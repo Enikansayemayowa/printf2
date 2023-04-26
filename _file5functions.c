@@ -33,6 +33,7 @@ int print_string(va_list types, char buffer[],
 {
 	int length = 0, a;
 	char *str = va_arg(types, char *);
+
 	UNUSED(buffer);
 	UNUSED(flags);
 	UNUSED(width);
@@ -101,7 +102,6 @@ int print_percent(va_list types, char buffer[],
  * @precision: Precision specifier
  * @size: Size specifier
  * Return: int
-
  */
 
 int print_int(va_list types, char buffer[],
@@ -109,7 +109,9 @@ int print_int(va_list types, char buffer[],
 {
 	int a = BUFF_SIZE - 2;
 	int is_negative = 0;
-	long int m = va_arg(types, long int);unsigned long int num;
+	long int m = va_arg(types, long int);
+	unsigned long int num;
+
 	m = convert_size_number(m, size);
 	if (m == 0)
 		buffer[a--] = '0';
@@ -152,7 +154,7 @@ int print_binary(va_list types, char buffer[],
 	UNUSED(precision);
 	UNUSED(size);
 	a = va_arg(types, unsigned int);
-	m = 2147483648; /* (2 ^ 31) */
+	m = 2147483648;
 	b[0] = a / m;
 	for (j = 1; j < 32; j++)
 	{
@@ -165,6 +167,7 @@ int print_binary(va_list types, char buffer[],
 		if (num || j == 31)
 		{
 			char z = '0' + b[j];
+
 			write(1, &z, 1);
 			count++;
 		}
